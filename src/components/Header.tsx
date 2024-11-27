@@ -19,9 +19,6 @@ export default function Header() {
             </svg>
             <p className="group-hover:text-gray-600">Electronics</p>
           </Link>
-          <Link to="/about" className="text-black">
-            About
-          </Link>
         </div>
         <div className="flex items-center justify-center space-x-4 px-4">
           <button
@@ -70,8 +67,10 @@ export default function Header() {
                 stroke-linejoin="round"
               />
             </svg>
+            <span className="visually-hidden">Shopping Cart</span>
           </button>
-          <button
+          <Link
+            to="login"
             className="rounded-full border border-gray-200 hover:border-gray-300 hover:shadow"
             type="button"
           >
@@ -89,7 +88,8 @@ export default function Header() {
                 stroke-linejoin="round"
               />
             </svg>
-          </button>
+            <span className="visually-hidden">Account</span>
+          </Link>
         </div>
       </nav>
     </header>
