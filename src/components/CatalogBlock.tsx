@@ -4,7 +4,7 @@ import CatalogPagination from "./CatalogPagination";
 import { TCatalogItem } from "../types/CatalogItem";
 
 export default function CatalogBlock() {
-  const [maxVisibleItems, setMaxVisibleItems] = useState(9);
+  const maxVisibleItems: number = 24;
 
   const items: TCatalogItem[] = [
     {
@@ -86,23 +86,6 @@ export default function CatalogBlock() {
       image: "/iphone.jpg",
     },
   ];
-
-  const updateVisibleItems = () => {
-    if (window.innerWidth < 640) {
-      setMaxVisibleItems(16);
-    } else if (window.innerWidth < 1024) {
-      setMaxVisibleItems(12);
-    } else {
-      setMaxVisibleItems(9);
-    }
-  };
-
-  useEffect(() => {
-    updateVisibleItems();
-
-    window.addEventListener("resize", updateVisibleItems);
-    return () => window.removeEventListener("resize", updateVisibleItems);
-  }, []);
 
   return (
     <>
