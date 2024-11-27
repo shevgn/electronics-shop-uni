@@ -35,7 +35,7 @@ export default function App() {
           <img
             className="absolute top-0 h-full w-screen object-cover"
             src={MainPhoto}
-            fetchPriority="high"
+            fetchpriority="high"
             srcSet={`${MainPhotoSmall} 768w, ${MainPhotoMedium} 1280w, ${MainPhoto} 1700w`}
             alt="Modern Interior"
           />
@@ -87,6 +87,7 @@ export default function App() {
                 type="email"
                 name="email"
                 aria-required="true"
+                autoComplete="email"
                 required
                 placeholder="Enter your email"
                 className="w-full rounded-l-full bg-transparent py-2 pl-4 transition-all focus:outline-none md:p-2 md:px-6"
