@@ -6,7 +6,7 @@ export default function Header() {
       <nav className="flex h-full w-full justify-between rounded-b-md bg-white shadow">
         <div className="flex items-center justify-center px-4">
           <Link
-            className="group flex items-center justify-center space-x-1 text-lg font-bold text-black"
+            className="group flex items-center justify-center space-x-1 text-lg font-bold text-black active:scale-95"
             to="/"
           >
             <svg
@@ -22,7 +22,7 @@ export default function Header() {
         </div>
         <div className="flex items-center justify-center space-x-4 px-4">
           <button
-            className="rounded-full border border-gray-200 hover:border-gray-300 hover:shadow"
+            className="rounded-full border border-gray-200 hover:border-gray-300 hover:shadow active:scale-95"
             type="button"
           >
             <svg
@@ -71,7 +71,7 @@ export default function Header() {
           </button>
           <Link
             to="login"
-            className="rounded-full border border-gray-200 hover:border-gray-300 hover:shadow"
+            className="rounded-full border border-gray-200 hover:border-gray-300 hover:shadow active:scale-95"
             type="button"
           >
             <svg
