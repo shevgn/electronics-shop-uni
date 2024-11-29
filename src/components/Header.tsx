@@ -70,7 +70,7 @@ export default function Header() {
             <span className="visually-hidden">Shopping Cart</span>
           </button>
           <Link
-            to="login"
+            to="auth"
             className="rounded-full border border-gray-200 hover:border-gray-300 hover:shadow active:scale-95"
             type="button"
           >
