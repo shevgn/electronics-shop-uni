@@ -24,7 +24,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         type="button"
       >
         {buttonIcon && <span className="mr-2">{buttonIcon}</span>}
-        <p className="text-sm font-medium md:text-base">{buttonLabel}</p>
+        <p className="text-base font-medium">{buttonLabel}</p>
         <svg
           className={`ml-2 h-5 w-5 transform transition-transform ${isOpen ? "rotate-180" : "rotate-0"
             }`}
@@ -46,7 +46,7 @@ const Dropdown: React.FC<DropdownProps> = ({
             <li key={index} className="p-1 md:mt-1">
               <button className="group flex items-center space-x-1 md:space-x-2">
                 {item.icon && item.icon}
-                <p className="text-xs group-hover:text-gray-500 md:text-base">
+                <p className="text-sm group-hover:text-gray-500">
                   {item.label}
                 </p>
               </button>
