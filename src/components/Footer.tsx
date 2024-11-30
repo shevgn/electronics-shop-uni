@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="flex h-full flex-col items-center space-y-4 px-10">
+    <footer className="flex h-full flex-col items-center space-y-4 px-4 md:px-10">
       <section className="mb-4 w-full space-y-4 rounded-xl bg-gradient-to-br from-gray-700 to-black p-4 text-black md:space-y-8 md:p-6">
         <h2 className="w-full text-3xl font-semibold text-white md:w-2/5 md:text-4xl lg:text-5xl">
           Subscribe for new arrivals
