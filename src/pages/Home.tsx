@@ -45,7 +45,7 @@ export default function Home() {
               Catalog
             </h3>
             <div className="flex flex-col md:flex-row md:space-x-4">
-              <div className="items-center space-x-2 text-sm text-gray-700 md:flex-col">
+              <div className="items-center text-sm text-gray-700 md:flex-col">
                 <h4 className="mb-2 text-base font-semibold text-black">
                   Category
                 </h4>
