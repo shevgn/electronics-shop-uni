@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import AccountPopover from "./AccountPopover";
+import ShoppingCartPopover from "./ShoppingCartPopover";
 
 export default function Header() {
   return (
@@ -21,55 +22,7 @@ export default function Header() {
         </Link>
         <ul className="flex items-center justify-center px-4">
           <li className="flex aspect-square h-full p-1.5">
-            <button
-              title="Shopping Cart"
-              className="flex h-full w-full items-center justify-center rounded-full border border-gray-200 transition-all hover:scale-105 hover:border-gray-300 active:scale-95"
-              type="button"
-            >
-              <svg
-                className="h-6 w-6"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M3 3H4.37144C5.31982 3 6.13781 3.66607 6.32996 4.59479L8.67004 15.9052C8.86219 16.8339 9.68018 17.5 10.6286 17.5H17.5"
-                  stroke="#000000"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M6.82422 7H19.6743C20.3386 7 20.8183 7.6359 20.6358 8.27472L19.6217 11.8242C19.2537 13.1121 18.0765 14 16.7371 14H8.27734"
-                  stroke="#000000"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <circle
-                  cx="16.5"
-                  cy="20.5"
-                  r="0.5"
-                  fill="#000000"
-                  stroke="#000000"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <circle
-                  cx="0.5"
-                  cy="0.5"
-                  r="0.5"
-                  transform="matrix(1 0 0 -1 10 21)"
-                  fill="#000000"
-                  stroke="#000000"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-              <span className="visually-hidden">Shopping Cart</span>
-            </button>
+            <ShoppingCartPopover />
           </li>
           <li className="flex aspect-square h-full p-1.5">
             <AccountPopover />
