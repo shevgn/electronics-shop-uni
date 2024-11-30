@@ -12,7 +12,7 @@ export default function CatalogItem({ item }: { item: TCatalogItem }) {
         rel="noopener noreferrer"
         className=""
       >
-        <div className="absolute right-2 top-2 rounded-3xl border border-gray-300 bg-white p-0.5 px-2 text-xs">
+        <div className="absolute right-2 top-2 rounded-3xl border border-gray-300 bg-white px-1.5 text-xs">
           {item.category}
         </div>
         <div className="mb-2 h-52 rounded-2xl bg-gray-100 p-6 md:h-72">
