@@ -24,7 +24,7 @@ export default function Product() {
               transition={{ duration: 0.5, type: "spring", stiffness: 50 }}
               className="flex w-2/3 items-center justify-center rounded-2xl border border-gray-200 bg-white p-4 pt-16 md:mb-10 md:w-1/2"
             >
-              <h2 className="text-lg font-bold text-black md:text-2xl">
+              <h2 className="font-bold text-black sm:text-lg md:text-2xl">
                 {item.name}
               </h2>
             </motion.div>
