@@ -7,12 +7,12 @@ import {
   ForGaming,
   ForPhone,
   ForMusic,
-} from "../components/icons/DropdownIcons";
-import Header from "../components/Header";
-import Dropdown from "../components/Dropdown";
-import { DropdownItem } from "../types/DropdownItem";
-import CatalogBlock from "../components/CatalogBlock";
-import Footer from "../components/Footer";
+} from "../../components/icons/DropdownIcons";
+import Header from "../../components/Header";
+import Dropdown from "../../components/Dropdown";
+import { DropdownItem } from "../../types/DropdownItem";
+import CatalogBlock from "../../components/CatalogBlock";
+import Footer from "../../components/Footer";
 
 export default function Home() {
   const dropdownItemsAll: DropdownItem[] = [
