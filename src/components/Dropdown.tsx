@@ -29,7 +29,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         }}
         whileTap={{ scale: 0.95 }}
         whileHover={{ scale: 1.05 }}
-        className="mb-2 flex w-full items-center justify-between rounded-lg border p-3 md:m-0 md:justify-start"
+        className="mb-2 flex w-full items-center justify-between rounded-lg border p-3 md:m-0 lg:justify-start"
         onClick={() => setIsOpen(!isOpen)}
         type="button"
       >
@@ -77,7 +77,7 @@ const Dropdown: React.FC<DropdownProps> = ({
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.4 }}
-            className="flex flex-row items-start font-medium md:flex-col"
+            className="flex flex-row items-start space-x-0 font-medium sm:space-x-2 lg:flex-col lg:space-x-0"
           >
             {items.map((item, index) => (
               <motion.li
@@ -93,7 +93,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                 }}
                 className="w-full md:pt-1"
               >
-                <button className="flex h-full w-full items-center justify-start space-x-1 text-nowrap rounded-md border border-gray-200 p-1 py-1.5 md:space-x-2 md:pl-6">
+                <button className="flex h-full w-full items-center justify-center space-x-1 text-nowrap rounded-md border border-gray-200 px-1 py-3 md:justify-start md:space-x-2 md:pl-6 lg:py-2">
                   {item.icon && item.icon}
                   <p className="text-xs">{item.label}</p>
                 </button>
