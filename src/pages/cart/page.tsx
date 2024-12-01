@@ -1,9 +1,14 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useCart } from "./../../context/CartProvider";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+
+const discount: number = 0.2;
+const tax: number = 0.05;
 
 export default function Cart() {
   const { state, dispatch } = useCart();
+  const [promoApplied, setPromoApplied] = useState(false);
 
   const updateQuantity = (id: number, quantity: number) => {
     dispatch({ type: "UPDATE_QUANTITY", payload: { id, quantity } });
@@ -13,9 +18,22 @@ export default function Cart() {
     dispatch({ type: "REMOVE_FROM_CART", payload: { id } });
   };
 
+  const totalAmount = state.items.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0,
+  );
+
+  const calculateDiscount = (amount: number) => {
+    return amount * discount;
+  };
+
+  const calculateTax = (amount: number) => {
+    return amount * tax;
+  };
+
   return (
     <>
-      <main className="relative flex h-screen w-screen items-center justify-center overflow-hidden bg-gradient-to-t from-gray-100 to-gray-300 px-4 py-16">
+      <main className="relative flex h-screen w-screen items-center justify-center overflow-hidden bg-gradient-to-t from-gray-100 to-gray-300 px-4 py-10">
         <h1 className="sr-only">Shopping Cart</h1>
         <Link
           to="/"
@@ -40,16 +58,28 @@ export default function Cart() {
         <motion.section
           layout
           transition={{ duration: 0.4 }}
-          className="relative flex h-full w-full flex-col space-y-4 overflow-hidden rounded-lg bg-white p-4 text-gray-800 shadow md:w-1/2"
+          className="relative flex h-full w-full flex-col space-y-4 overflow-hidden rounded-lg bg-white p-4 text-gray-800 shadow md:w-2/3 lg:w-1/2"
         >
           <h2 className="text-2xl font-medium text-black">Cart</h2>
           <hr className="border-gray-300" />
-          <div className="scroll-mt-4 overflow-y-auto scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-gray-400">
+          <div className="h-full scroll-mt-4 overflow-y-auto scroll-smooth scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-gray-400">
             <motion.ul
               layout
-              className="relative flex flex-col space-y-2 overflow-hidden"
+              className="relative flex min-h-full flex-col space-y-2 overflow-hidden"
             >
               <AnimatePresence>
+                {state.items.length === 0 && (
+                  <motion.li
+                    layout
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.4, delay: 0.3 }}
+                    className="flex flex-row items-center justify-center"
+                  >
+                    <span className="text-gray-500">Cart is empty</span>
+                  </motion.li>
+                )}
                 {state.items.map((item) => (
                   <motion.li
                     layout
@@ -60,6 +90,7 @@ export default function Cart() {
                     key={item.id}
                     className="flex flex-row"
                   >
+                    <h3 className="sr-only">Product</h3>
                     <div className="flex w-3/5 flex-row space-x-4">
                       <div className="aspect-square h-20 rounded-lg border border-gray-300 bg-gray-100 text-xs">
                         <img src="" alt={item.name} className="h-full w-full" />
@@ -69,8 +100,7 @@ export default function Cart() {
                         <span className="text-sm text-gray-500">Sky Blue</span>
                       </div>
                     </div>
-                    <section className="flex w-2/5 flex-row items-center justify-between">
-                      <h4 className="sr-only">Quantity</h4>
+                    <div className="flex w-2/5 flex-row items-center justify-between">
                       <div className="flex flex-row items-center justify-between rounded-lg border border-gray-300">
                         <button
                           disabled={item.quantity === 1}
@@ -153,7 +183,7 @@ export default function Cart() {
                           />
                         </svg>
                       </button>
-                    </section>
+                    </div>
                   </motion.li>
                 ))}
               </AnimatePresence>
@@ -167,25 +197,74 @@ export default function Cart() {
             transition={{ duration: 0.4 }}
             className="relative flex flex-col"
           >
-            <h3 className="sr-only">Payment details</h3>
-            <label htmlFor="promo" className="sr-only">
-              Your promocode
-            </label>
-            <input
-              id="promo"
-              type="text"
-              placeholder="Promocode"
-              className="rounded-lg border border-gray-300 bg-transparent p-1.5 focus:border-gray-500 focus:outline-none"
-            />
-            <motion.button
-              initial={false}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="absolute bottom-0 right-0 top-0 rounded-lg border border-gray-300 bg-white p-1 px-2"
-            >
-              <span className="font-medium">Apply</span>
-            </motion.button>
+            <h3 className="sr-only">Payment Details</h3>
+            <section className="relative mb-4 flex w-full flex-col">
+              <h4 className="sr-only">Your promocode</h4>
+              <div className="relative flex flex-col">
+                <label htmlFor="promo" className="sr-only">
+                  Your promocode
+                </label>
+                <input
+                  id="promo"
+                  type="text"
+                  placeholder="Promocode"
+                  className={`rounded-lg border border-gray-300 bg-transparent p-1.5 focus:border-gray-500 focus:outline-none ${promoApplied && "border-2 border-green-500"}`}
+                />
+                <motion.button
+                  initial={false}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setPromoApplied(true)}
+                  className="absolute bottom-0 right-0 top-0 rounded-lg border border-gray-300 bg-white p-1 px-2"
+                >
+                  <span className="font-medium">Apply</span>
+                </motion.button>
+              </div>
+              <p className="pt-2 text-sm text-gray-400">20% off discount</p>
+            </section>
+            <hr className="border-dashed border-gray-300" />
+            <section className="my-4 flex flex-col">
+              <h4 className="sr-only">Total calculation</h4>
+              <div className="mb-3 flex flex-row justify-between">
+                <h5 className="text-base">Subtotal</h5>
+                <span className="">${totalAmount.toFixed(2)}</span>
+              </div>
+              <div className="flex flex-col space-y-1 text-sm text-gray-500">
+                <div className="flex flex-row justify-between">
+                  <span>Discount</span>
+                  <span>
+                    {promoApplied
+                      ? `(${discount * 100}%) - $${calculateDiscount(totalAmount).toFixed(2)}`
+                      : " - $0"}
+                  </span>
+                </div>
+                <div className="flex flex-row justify-between">
+                  <span>Tax</span>
+                  <span>
+                    ({tax * 100}%) + ${calculateTax(totalAmount).toFixed(2)}
+                  </span>
+                </div>
+              </div>
+            </section>
+            <hr className="border-dashed border-gray-300" />
+            <section className="mt-4">
+              <h4 className="sr-only">Total amount</h4>
+              <div className="flex flex-row justify-between">
+                <span className="text-lg font-medium">Total</span>
+                <span className="text-lg font-medium">
+                  $
+                  {(
+                    totalAmount -
+                    calculateDiscount(totalAmount) +
+                    calculateTax(totalAmount)
+                  ).toFixed(2)}
+                </span>
+              </div>
+            </section>
           </motion.section>
+          <button className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">
+            <span>Confirm</span>
+          </button>
         </motion.section>
       </main>
     </>
