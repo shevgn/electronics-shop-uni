@@ -24,7 +24,7 @@ export default function RegisterForm({
   return (
     <MSection key={"register"}>
       <h2 className="p-2 text-4xl">Create Account</h2>
-      <form className="my-10 flex w-full flex-col space-y-4 md:w-1/2 lg:w-1/3">
+      <form className="my-4 flex w-full flex-col space-y-4 md:w-1/2 lg:w-1/3">
         <InputField
           onChange={handleChange}
           label={"Name"}

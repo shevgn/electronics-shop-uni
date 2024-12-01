@@ -9,7 +9,7 @@ export default function AuthPage() {
   const [isLogin, setIsLogin] = useState<boolean | null>(null);
 
   return (
-    <main className="flex h-screen w-screen items-center justify-center bg-gradient-to-t from-gray-100 to-gray-300 p-4 py-56 sm:p-0">
+    <main className="flex h-screen w-screen items-center justify-center bg-gradient-to-t from-gray-100 to-gray-300 p-4 py-24 sm:p-0">
       <h1 className="visually-hidden">Auth</h1>
       <Link
         to="/"
