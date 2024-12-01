@@ -10,7 +10,7 @@ export default function AuthPage() {
 
   return (
     <main className="flex h-screen w-screen items-center justify-center bg-gradient-to-t from-gray-100 to-gray-300 p-4 py-56 sm:p-0">
-      <h1 className="visually-hidden">Login</h1>
+      <h1 className="visually-hidden">Auth</h1>
       <Link
         to="/"
         className="group absolute bottom-0 flex h-10 w-40 items-center justify-center rounded border-gray-100 bg-white pr-2 shadow transition-all hover:w-20 hover:border sm:bottom-auto sm:left-0 sm:h-32 sm:w-14 sm:justify-end"

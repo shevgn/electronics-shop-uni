@@ -1,4 +1,4 @@
-import InputField from "../../components/InputField";
+import InputField from "./InputField";
 import MSection from "./MSection";
 
 export default function RegisterForm({

@@ -8,14 +8,14 @@ import {
   ForPhone,
   ForMusic,
 } from "../../components/icons/DropdownIcons";
-import Header from "../../components/Header";
-import Dropdown from "../../components/Dropdown";
-import { DropdownItem } from "../../types/DropdownItem";
-import CatalogBlock from "../../components/CatalogBlock";
+import Header from "../../components/header/Header";
+import Dropdown from "./Dropdown";
+import { TDropdownItem } from "../../types/index";
+import CatalogBlock from "./CatalogBlock";
 import Footer from "../../components/Footer";
 
 export default function Home() {
-  const dropdownItemsAll: DropdownItem[] = [
+  const dropdownItemsAll: TDropdownItem[] = [
     { label: "For Home", icon: <ForHome /> },
     { label: "For Music", icon: <ForMusic /> },
     { label: "For Phone", icon: <ForPhone /> },
@@ -28,12 +28,12 @@ export default function Home() {
         <h1 className="visually-hidden">Electronics Shop</h1>
         <div className="relative h-64 sm:h-72 md:h-96">
           <img
-            className="absolute top-0 h-full w-screen object-cover"
+            className="pointer-events-none absolute top-0 h-full w-screen select-none object-cover"
             src={MainPhoto}
             srcSet={`${MainPhotoSmall} 768w, ${MainPhotoMedium} 1280w, ${MainPhoto} 1700w`}
             alt="Modern Interior"
           />
-          <p className="absolute -bottom-4 left-1/2 -translate-x-1/2 transform text-[10rem] font-semibold text-white sm:-bottom-6 sm:text-[12rem] md:-bottom-8 md:text-[14rem]">
+          <p className="pointer-events-none absolute -bottom-4 left-1/2 -translate-x-1/2 transform select-none text-[10rem] font-semibold text-white sm:-bottom-6 sm:text-[12rem] md:-bottom-8 md:text-[14rem]">
             Shop
           </p>
         </div>
