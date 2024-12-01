@@ -1,13 +1,17 @@
 import { useState } from "react";
 
 export default function InputField({
+  onChange,
   label,
   id,
   type,
+  name,
 }: {
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   label: string;
   id: string;
   type: string;
+  name?: string;
 }) {
   const [value, setValue] = useState("");
 
@@ -20,10 +24,12 @@ export default function InputField({
         {label}
       </label>
       <input
+        onChange={(e) => onChange(e)}
+        onInput={(e) => setValue(e.currentTarget.value)}
         id={id}
         type={type}
+        name={name ? name : id}
         required
-        onChange={(e) => setValue(e.target.value)}
         className="w-full rounded-md border border-gray-200 bg-white p-3 focus:border-gray-500 focus:outline-none"
       />
     </p>

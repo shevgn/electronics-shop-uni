@@ -1,3 +1,4 @@
+import { useState } from "react";
 import InputField from "./InputField";
 import MSection from "./MSection";
 
@@ -6,14 +7,44 @@ export default function RegisterForm({
 }: {
   setIsLogin: (value: null) => void;
 }) {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({
+      ...form,
+      [e.target.id]: e.target.value,
+    });
+  };
+
   return (
     <MSection key={"register"}>
       <h2 className="p-2 text-4xl">Create Account</h2>
       <form className="my-10 flex w-full flex-col space-y-4 md:w-1/2 lg:w-1/3">
-        <InputField label={"Name"} id={"name"} type={"text"} />
-        <InputField label={"Email"} id={"email"} type={"email"} />
-        <InputField label={"Password"} id={"password"} type={"password"} />
         <InputField
+          onChange={handleChange}
+          label={"Name"}
+          id={"name"}
+          type={"text"}
+        />
+        <InputField
+          onChange={handleChange}
+          label={"Email"}
+          id={"email"}
+          type={"email"}
+        />
+        <InputField
+          onChange={handleChange}
+          label={"Password"}
+          id={"password"}
+          type={"password"}
+        />
+        <InputField
+          onChange={handleChange}
           label={"Confirm Password"}
           id={"confirm-password"}
           type={"password"}

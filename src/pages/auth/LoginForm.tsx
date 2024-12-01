@@ -1,3 +1,4 @@
+import { useState } from "react";
 import InputField from "./InputField";
 import MSection from "./MSection";
 
@@ -6,12 +7,34 @@ export default function LoginForm({
 }: {
   setIsLogin: (value: null) => void;
 }) {
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   return (
     <MSection key={"login"}>
       <h2 className="p-2 text-4xl">Login</h2>
       <form className="my-10 flex w-full flex-col space-y-4 md:w-1/2 lg:w-1/3">
-        <InputField label={"Email"} id={"email"} type={"email"} />
-        <InputField label={"Password"} id={"password"} type={"password"} />
+        <InputField
+          onChange={handleChange}
+          label={"Email"}
+          id={"email"}
+          type={"email"}
+        />
+        <InputField
+          onChange={handleChange}
+          label={"Password"}
+          id={"password"}
+          type={"password"}
+        />
         <button
           type="submit"
           className="rounded-md border border-black bg-black p-2 font-bold text-white transition-all active:scale-95"
