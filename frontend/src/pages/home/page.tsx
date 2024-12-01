@@ -12,7 +12,7 @@ import Header from "../../components/header/Header";
 import Dropdown from "./Dropdown";
 import { TDropdownItem } from "../../types/index";
 import CatalogBlock from "./CatalogBlock";
-import Footer from "../../components/Footer";
+import Footer from "@components/Footer";
 
 export default function Home() {
   const dropdownItemsAll: TDropdownItem[] = [
