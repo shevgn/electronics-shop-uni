@@ -1,7 +1,7 @@
 {
   "watch": [
-    "./"
+    "src"
   ],
   "ext": "ts",
-  "exec": "concurrently \"npx tsc --watch\" \"tsx index.ts\""
+  "exec": "concurrently \"npx tsc --watch\" \"tsx -r tsconfig-paths/register src/index.ts\""
 }

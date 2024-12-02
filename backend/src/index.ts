@@ -1,5 +1,3 @@
-"use strict";
-
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import usersRouter from "@/routes/users.route";
@@ -9,7 +7,7 @@ dotenv.config();
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
-app.get("/", (req: Request, res: Response) => {
+app.get("/", (_: Request, res: Response) => {
   res.send("Hello World!");
 });
 
