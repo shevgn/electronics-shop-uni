@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import usersService from "@services/users.service";
 
 async function getAll(_: Request, res: Response) {
@@ -6,28 +6,38 @@ async function getAll(_: Request, res: Response) {
   res.json(users);
 }
 
-async function get(req: Request, res: Response) {
-  const users = await usersService.get(Number(req.params.id));
-  res.json(users);
+async function get(req: Request, res: Response): Promise<void> {
+  const user = await usersService.get(Number(req.params.id));
+  if (!user) {
+    res.status(404).json({ message: "User not found" });
+  }
+  res.status(200).json(user);
 }
 
-async function create(req: Request, res: Response) {
-  const user = await usersService.create(
-    req.body.name,
-    req.body.email,
-    req.body.password,
-  );
-  res.json(user);
+async function login(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> {
+  try {
+    const user = await usersService.login(req.body);
+    res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
 }
 
-async function update(req: Request, res: Response) {
-  const user = await usersService.update(req.body.id, req.body.name);
-  res.json(user);
+async function register(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> {
+  try {
+    const user = await usersService.register(req.body);
+    res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
 }
 
-async function remove(req: Request, res: Response) {
-  const user = await usersService.remove(Number(req.params.id));
-  res.json(user);
-}
-
-export default { getAll, get, create, update, remove };
+export default { getAll, get, login, register };
