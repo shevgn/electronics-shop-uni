@@ -14,9 +14,13 @@ import {
   useInteractions,
 } from "@floating-ui/react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { logout } from "@/features/userSlice";
 
 export default function UserPopover() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const { user, token } = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -45,7 +49,7 @@ export default function UserPopover() {
   ]);
 
   const handleClick = () => {
-    if (isLoggedIn) {
+    if (token) {
       setIsOpen((prev) => !prev);
     } else {
       navigate("/auth");
@@ -61,7 +65,7 @@ export default function UserPopover() {
         onClick={handleClick}
         className="flex h-full w-full items-center justify-center rounded-full border border-gray-200 transition-all hover:scale-105 hover:border-gray-300 active:scale-95"
       >
-        {isLoggedIn ? (
+        {token ? (
           <>
             <svg
               className="h-6 w-6"
@@ -85,7 +89,7 @@ export default function UserPopover() {
       </button>
 
       <AnimatePresence>
-        {isOpen && (
+        {isOpen && token && (
           <FloatingPortal>
             <FloatingFocusManager context={context}>
               <motion.section
@@ -110,13 +114,13 @@ export default function UserPopover() {
                 className="rounded-lg border bg-white p-4 text-black shadow-lg"
               >
                 <h3 className="mb-2 text-lg font-bold">User Info</h3>
-                <p className="text-sm">Name: John Doe</p>
-                <p className="text-sm">Email: john.doe@example.com</p>
+                <p className="text-sm">Name: {user.name}</p>
+                <p className="text-sm">Email: {user.email}</p>
                 <button
                   className="mt-3 rounded-md bg-red-500 px-4 py-2 text-sm text-white hover:bg-red-600"
                   onClick={() => {
-                    setIsLoggedIn(false);
                     setIsOpen(false);
+                    dispatch(logout());
                   }}
                 >
                   Log Out

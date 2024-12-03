@@ -14,14 +14,17 @@ import {
 } from "@floating-ui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useCart } from "./../../context/CartProvider";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { updateQuantity } from "@/features/cartSlice";
 
 export default function ShoppingCartPopover() {
   const [isOpen, setIsOpen] = useState(false);
-  const { state, dispatch } = useCart();
+  const cart = useSelector((state: RootState) => state.cart.items);
+  const dispatch = useDispatch();
 
-  const updateQuantity = (id: number, quantity: number) => {
-    dispatch({ type: "UPDATE_QUANTITY", payload: { id, quantity } });
+  const changeQuantity = (id: number, quantity: number): void => {
+    dispatch(updateQuantity({ id, quantity }));
   };
 
   const { x, y, strategy, refs, context, placement } = useFloating({
@@ -41,15 +44,12 @@ export default function ShoppingCartPopover() {
     role,
   ]);
 
-  const totalAmount = state.items.reduce(
+  const totalAmount = cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0,
   );
 
-  const totalQuantity = state.items.reduce(
-    (total, item) => total + item.quantity,
-    0,
-  );
+  const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <>
@@ -140,8 +140,8 @@ export default function ShoppingCartPopover() {
                 <h3 className="mb-2 text-lg font-bold">Your Cart</h3>
                 <ul className="mb-3 space-y-1">
                   <AnimatePresence>
-                    {state.items.length > 0 ? (
-                      state.items.map((item) => (
+                    {cart.length > 0 ? (
+                      cart.map((item) => (
                         <motion.li
                           initial={{ scale: 1, backgroundColor: "#ffffff" }}
                           animate={{ opacity: 1 }}
@@ -164,7 +164,7 @@ export default function ShoppingCartPopover() {
                               whileHover={{ scale: 1.1 }}
                               transition={{ duration: 0.1 }}
                               onClick={() =>
-                                updateQuantity(item.id, item.quantity - 1)
+                                changeQuantity(item.id, item.quantity - 1)
                               }
                               className="rounded-lg bg-red-500"
                             >
@@ -197,7 +197,7 @@ export default function ShoppingCartPopover() {
                   </AnimatePresence>
                 </ul>
                 <AnimatePresence>
-                  {state.items.length > 0 && (
+                  {cart.length > 0 && (
                     <>
                       <motion.div
                         initial={false}

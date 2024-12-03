@@ -7,15 +7,15 @@ import {
   ForGaming,
   ForPhone,
   ForMusic,
-} from "../../components/icons/DropdownIcons";
-import Header from "../../components/header/Header";
+} from "@/components/icons/DropdownIcons";
+import Header from "@/components/header/Header";
 import Dropdown from "./Dropdown";
-import { TDropdownItem } from "../../types/index";
+import { IDropdownItem } from "@/types/index";
 import CatalogBlock from "./CatalogBlock";
 import Footer from "@components/Footer";
 
 export default function Home() {
-  const dropdownItemsAll: TDropdownItem[] = [
+  const dropdownItemsAll: IDropdownItem[] = [
     { label: "For Home", icon: <ForHome /> },
     { label: "For Music", icon: <ForMusic /> },
     { label: "For Phone", icon: <ForPhone /> },

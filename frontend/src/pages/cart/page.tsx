@@ -1,30 +1,34 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useCart } from "./../../context/CartProvider";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { updateQuantity, removeItem } from "@/features/cartSlice";
 
 const discount: number = 0.2;
 const tax: number = 0.05;
 
 export default function Cart() {
-  const { state, dispatch } = useCart();
+  const cart = useSelector((state: RootState) => state.cart.items);
+  const dispatch = useDispatch();
   const [promoApplied, setPromoApplied] = useState(false);
 
-  const updateQuantity = (id: number, quantity: number) => {
-    dispatch({ type: "UPDATE_QUANTITY", payload: { id, quantity } });
+  const changeQuantity = (id: number, quantity: number) => {
+    dispatch(updateQuantity({ id, quantity }));
   };
 
   const removeFromCart = (id: number) => {
-    dispatch({ type: "REMOVE_FROM_CART", payload: { id } });
+    dispatch(removeItem({ id }));
   };
 
-  const totalAmount = state.items.reduce(
+  const totalAmount = cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0,
   );
 
   const calculateDiscount = (amount: number) => {
-    return amount * discount;
+    if (promoApplied) return amount * discount;
+    return 0;
   };
 
   const calculateTax = (amount: number) => {
@@ -68,7 +72,7 @@ export default function Cart() {
               className="relative flex min-h-full flex-col space-y-2 overflow-hidden"
             >
               <AnimatePresence>
-                {state.items.length === 0 && (
+                {cart.length === 0 && (
                   <motion.li
                     layout
                     initial={{ opacity: 0, y: 20 }}
@@ -80,7 +84,7 @@ export default function Cart() {
                     <span className="text-gray-500">Cart is empty</span>
                   </motion.li>
                 )}
-                {state.items.map((item) => (
+                {cart.map((item) => (
                   <motion.li
                     layout
                     initial={{ opacity: 0, y: 20 }}
@@ -105,7 +109,7 @@ export default function Cart() {
                         <button
                           disabled={item.quantity === 1}
                           onClick={() =>
-                            updateQuantity(item.id, item.quantity - 1)
+                            changeQuantity(item.id, item.quantity - 1)
                           }
                           className="group h-full w-full rounded-l-lg p-1.5"
                         >
@@ -136,7 +140,7 @@ export default function Cart() {
                         <span className="px-1">{item.quantity}</span>
                         <button
                           onClick={() =>
-                            updateQuantity(item.id, item.quantity + 1)
+                            changeQuantity(item.id, item.quantity + 1)
                           }
                           className="h-full w-full rounded-r-lg p-1.5"
                         >

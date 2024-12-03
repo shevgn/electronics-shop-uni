@@ -25,9 +25,9 @@ export default function AuthPage() {
             className="group-hover:stroke-gray-700"
             d="M4 12H20M4 12L8 8M4 12L8 16"
             stroke="#000000"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
       </Link>

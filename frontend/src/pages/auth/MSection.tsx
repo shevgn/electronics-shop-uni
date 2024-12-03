@@ -2,16 +2,13 @@ import { motion } from "motion/react";
 
 export default function MSection({
   children,
-  key,
   className,
 }: {
   children: React.ReactNode;
-  key: string | number;
   className?: string;
 }) {
   return (
     <motion.section
-      key={key}
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1, transition: { duration: 0.2 } }}
       exit={{ opacity: 0, scale: 0.95, transition: { duration: 1.5 } }}

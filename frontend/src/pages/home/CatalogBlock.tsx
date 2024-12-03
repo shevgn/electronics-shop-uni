@@ -1,11 +1,11 @@
 import CatalogItem from "./CatalogItem";
 import CatalogPagination from "./CatalogPagination";
-import { TCatalogItem } from "../types/index";
+import { ICatalogItem } from "@/types/index";
 
 const maxVisibleItems: number = 24;
 
 export default function CatalogBlock() {
-  const items: TCatalogItem[] = [
+  const items: ICatalogItem[] = [
     {
       id: 1,
       name: "Apple iPhone 12 Pro Max",

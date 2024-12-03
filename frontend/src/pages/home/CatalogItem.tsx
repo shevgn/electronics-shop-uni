@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
-import { TCatalogItem } from "../../types/index";
-import { useCart } from "./../../context/CartProvider";
+import { ICatalogItem } from "@/types/index";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/index";
+import { addItem } from "@/features/cartSlice";
 
-export default function CatalogItem({ item }: { item: TCatalogItem }) {
-  const { dispatch } = useCart();
+export default function CatalogItem({ item }: { item: ICatalogItem }) {
+  const cart = useSelector((state: RootState) => state.cart);
+  const dispatch = useDispatch();
 
   const addToCart = () => {
-    dispatch({
-      type: "ADD_TO_CART",
-      payload: { id: item.id, name: item.name, price: item.price, quantity: 1 },
-    });
+    dispatch(addItem({ ...item, quantity: 1 }));
   };
 
   return (
