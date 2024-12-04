@@ -2,7 +2,9 @@ import express, { Express, Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import usersRouter from "@/routes/users.route";
+import productsRouter from "@/routes/products.route";
 import errorHandler from "./middlewares/errorHandler.middleware";
+
 dotenv.config();
 
 const app: Express = express();
@@ -22,6 +24,7 @@ app.get("/", (_: Request, res: Response) => {
 });
 
 app.use("/users", usersRouter);
+app.use("/products", productsRouter);
 
 app.use(errorHandler);
 
