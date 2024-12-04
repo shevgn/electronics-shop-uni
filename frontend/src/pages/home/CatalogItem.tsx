@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ICatalogItem } from "@/types/index";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/store/index";
+import { RootState } from "@/store";
 import { addItem } from "@/features/cartSlice";
 
 export default function CatalogItem({ item }: { item: ICatalogItem }) {
@@ -16,7 +16,7 @@ export default function CatalogItem({ item }: { item: ICatalogItem }) {
     <div className="relative flex h-full w-full flex-col pb-8 text-black sm:pb-4 md:p-0">
       <Link
         to={{
-          pathname: `/product/${item.id}`,
+          pathname: `/products/${item.id}`,
         }}
         state={{ item }}
         rel="noopener noreferrer"
