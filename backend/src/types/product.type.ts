@@ -4,6 +4,7 @@ export type Product = {
   price: number;
   release_year: number;
   categories: string[];
-  details: string[];
+  details: Record<string, string>;
+  images: string[];
   brand: string;
 };
