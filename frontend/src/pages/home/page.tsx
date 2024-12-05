@@ -10,17 +10,33 @@ import {
 } from "@/components/icons/DropdownIcons";
 import Header from "@/components/header/Header";
 import Dropdown from "./Dropdown";
-import { IDropdownItem } from "@/types/index";
-import CatalogBlock from "./CatalogBlock";
+import { IDropdownItem, Product } from "@/types/index";
 import Footer from "@components/Footer";
+import useApi from "@/hooks/useApi";
+import { useEffect, useState } from "react";
+import { maxVisibleItemsPerPage } from "@/config/global.config";
+import CatalogPagination from "./CatalogPagination";
+import CatalogItem from "./CatalogItem";
+import { AnimatePresence } from "motion/react";
 
 export default function Home() {
+  const [category, setCategory] = useState<string | null>(null);
+  const { data, error, isLoading, fetchData } = useApi<Product[]>(
+    `http://localhost:3000/products/${category ? `?category=${category}` : ""}`,
+    { skipFetch: false },
+  );
+
+  useEffect(() => {
+    fetchData();
+  }, [category]);
+
   const dropdownItemsAll: IDropdownItem[] = [
     { label: "For Home", icon: <ForHome /> },
     { label: "For Music", icon: <ForMusic /> },
     { label: "For Phone", icon: <ForPhone /> },
     { label: "For Gaming", icon: <ForGaming /> },
   ];
+
   return (
     <>
       <Header />
@@ -53,11 +69,27 @@ export default function Home() {
                   buttonLabel="All Products"
                   buttonIcon={<ShoppingCardDropdown className="h-4 w-4" />}
                   items={dropdownItemsAll}
+                  changeCategory={setCategory}
                 />
               </div>
               <section className="h-full w-full px-4 md:p-0">
                 <h4 className="visually-hidden">Products</h4>
-                <CatalogBlock />
+                <div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-6 md:grid-cols-3 md:gap-4 lg:grid-cols-4 lg:gap-2 xl:grid-cols-5 xl:gap-4">
+                  <AnimatePresence>
+                    {data &&
+                      data.map(
+                        (item, index) =>
+                          index < maxVisibleItemsPerPage && (
+                            <CatalogItem key={index} item={item} />
+                          ),
+                      )}
+                  </AnimatePresence>
+                </div>
+                <div className="mb-4 mt-2 h-0.5 w-full bg-gray-200 md:mt-6"></div>
+                <CatalogPagination
+                  itemsCount={data ? data.length : 0}
+                  maxItemsPerPage={maxVisibleItemsPerPage}
+                />
               </section>
             </div>
           </div>

@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
-import { ICatalogItem } from "@/types/index";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/store";
+import { motion } from "framer-motion";
+import { Product } from "@/types/index";
+import { useDispatch } from "react-redux";
 import { addItem } from "@/features/cartSlice";
 
-export default function CatalogItem({ item }: { item: ICatalogItem }) {
-  const cart = useSelector((state: RootState) => state.cart);
+export default function CatalogItem({ item }: { item: Product }) {
   const dispatch = useDispatch();
 
   const addToCart = () => {
@@ -13,7 +12,12 @@ export default function CatalogItem({ item }: { item: ICatalogItem }) {
   };
 
   return (
-    <div className="relative flex h-full w-full flex-col pb-8 text-black sm:pb-4 md:p-0">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3 }}
+      className="relative flex h-full w-full flex-col pb-8 text-black sm:pb-4 md:p-0"
+    >
       <Link
         to={{
           pathname: `/products/${item.id}`,
@@ -22,16 +26,26 @@ export default function CatalogItem({ item }: { item: ICatalogItem }) {
         rel="noopener noreferrer"
         className=""
       >
-        <div className="absolute right-2 top-2 rounded-3xl border border-gray-300 bg-white px-1.5 text-xs">
-          {item.category}
-        </div>
-        <div className="mb-2 aspect-square w-full rounded-2xl bg-gray-100 p-6">
+        <ul className="absolute right-2 top-2 flex flex-row space-x-1">
+          {item.categories.map((category) => (
+            <li
+              key={category}
+              className="rounded-3xl border border-gray-300 bg-white px-1.5 text-center text-xs"
+            >
+              {category}
+            </li>
+          ))}
+        </ul>
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          className="mb-2 aspect-square w-full rounded-2xl bg-gray-100 p-6"
+        >
           <img
             className="h-full w-full object-cover object-center"
-            src={item.image}
+            src={item.images.find((image) => image.includes("preview"))}
             alt={item.name}
           />
-        </div>
+        </motion.div>
       </Link>
       <Link
         to={{
@@ -48,17 +62,11 @@ export default function CatalogItem({ item }: { item: ICatalogItem }) {
         <button
           title="Add to Cart"
           onClick={addToCart}
-          className="w-full flex-1 truncate rounded-3xl border border-gray-200 bg-gray-100 p-2 text-sm font-medium hover:shadow 2xl:text-base"
+          className="w-full flex-1 truncate rounded-3xl border border-gray-200 bg-gray-100 p-2 text-sm font-medium hover:scale-105 2xl:text-base"
         >
           <span>Add to Cart</span>
         </button>
-        <button
-          title="Buy Now"
-          className="w-full flex-1 truncate rounded-3xl bg-black p-2 text-sm font-medium text-white 2xl:text-base"
-        >
-          <span>Buy Now</span>
-        </button>
       </div>
-    </div>
+    </motion.div>
   );
 }

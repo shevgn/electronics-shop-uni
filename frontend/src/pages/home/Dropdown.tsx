@@ -1,19 +1,22 @@
 import { ReactElement, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { TDropdownItem } from "../types/index";
+import { IDropdownItem } from "@/types/index";
 
 interface DropdownProps {
   buttonLabel: string;
   buttonIcon?: ReactElement;
-  items: TDropdownItem[];
+  items: IDropdownItem[];
+  changeCategory: (category: string | null) => void;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
   buttonLabel,
   buttonIcon,
   items,
+  changeCategory,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   return (
     <motion.div
@@ -29,6 +32,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         }}
         whileTap={{ scale: 0.95 }}
         whileHover={{ scale: 1.05 }}
+        disabled={items.length === 0 || selectedCategory !== null}
         className="mb-2 flex w-full items-center justify-between rounded-lg border p-3 md:m-0 lg:justify-start"
         onClick={() => setIsOpen(!isOpen)}
         type="button"
@@ -93,7 +97,19 @@ const Dropdown: React.FC<DropdownProps> = ({
                 }}
                 className="w-full md:pt-1"
               >
-                <button className="flex h-full w-full items-center justify-center space-x-1 text-nowrap rounded-md border border-gray-200 px-1 py-3 md:justify-start md:space-x-2 md:pl-6 lg:py-2">
+                <button
+                  onClick={() => {
+                    if (selectedCategory !== item.label.split(" ")[1]) {
+                      setSelectedCategory(item.label.split(" ")[1]);
+                      changeCategory(item.label.split(" ")[1]);
+                    } else {
+                      setSelectedCategory(null);
+                      changeCategory(null);
+                    }
+                  }}
+                  type="button"
+                  className={`flex h-full w-full items-center justify-center space-x-1 text-nowrap rounded-md border border-gray-200 px-1 py-3 md:justify-start md:space-x-2 md:pl-6 lg:py-2 ${selectedCategory === item.label.split(" ")[1] ? "bg-gray-200" : ""}`}
+                >
                   {item.icon && item.icon}
                   <p className="text-xs">{item.label}</p>
                 </button>
