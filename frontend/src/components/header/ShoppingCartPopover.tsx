@@ -68,6 +68,7 @@ export default function ShoppingCartPopover() {
               animate={{ scale: 1, y: 0, x: 0 }}
               exit={{ scale: 1.5, opacity: 0 }}
               transition={{ duration: 0.2 }}
+              key={totalQuantity}
               className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white"
             >
               {totalQuantity}
