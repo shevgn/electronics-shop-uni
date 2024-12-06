@@ -159,7 +159,7 @@ export default function ShoppingCartPopover() {
                           <span>{item.name}</span>
                           <div className="flex items-center space-x-2">
                             <span className="">
-                              {item.quantity} x ${item.price}
+                              {item.quantity} x ${item.price.toFixed(2)}
                             </span>
                             <motion.button
                               whileHover={{ scale: 1.1 }}
