@@ -21,21 +21,39 @@ import { AnimatePresence } from "motion/react";
 
 export default function Home() {
   const [category, setCategory] = useState<string | null>(null);
+  const [allCategories, setAllCategories] = useState<string[]>([]);
   const { data, error, isLoading, fetchData } = useApi<Product[]>(
     `http://localhost:3000/products/${category ? `?category=${category}` : ""}`,
-    { skipFetch: false },
+    { skipFetch: true },
   );
+
+  const icons: React.ReactNode[] = [
+    <ForHome />,
+    <ForMusic />,
+    <ForPhone />,
+    <ForGaming />,
+  ];
+
+  const dropdownItemsAll: IDropdownItem[] = [
+    ...allCategories.map((category, index) => {
+      return { label: "For " + category, icon: icons[index] };
+    }),
+  ];
+
+  useEffect(() => {
+    if (data) {
+      if (allCategories.length === 0) {
+        const categories = data.reduce<string[]>((acc, item) => {
+          return [...acc, ...item.categories];
+        }, []);
+        setAllCategories([...new Set(categories)]);
+      }
+    }
+  }, [data, allCategories]);
 
   useEffect(() => {
     fetchData();
   }, [category]);
-
-  const dropdownItemsAll: IDropdownItem[] = [
-    { label: "For Home", icon: <ForHome /> },
-    { label: "For Music", icon: <ForMusic /> },
-    { label: "For Phone", icon: <ForPhone /> },
-    { label: "For Gaming", icon: <ForGaming /> },
-  ];
 
   return (
     <>
@@ -80,7 +98,7 @@ export default function Home() {
                       data.map(
                         (item, index) =>
                           index < maxVisibleItemsPerPage && (
-                            <CatalogItem key={index} item={item} />
+                            <CatalogItem key={item.id} item={item} />
                           ),
                       )}
                   </AnimatePresence>
