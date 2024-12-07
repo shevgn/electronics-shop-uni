@@ -15,6 +15,7 @@ export default function CatalogItem({ item }: { item: Product }) {
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.8 }}
       transition={{ duration: 0.3 }}
       className="relative flex h-full w-full flex-col pb-8 text-black sm:pb-4 md:p-0"
     >
