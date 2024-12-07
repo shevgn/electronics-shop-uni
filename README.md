@@ -11,7 +11,7 @@ This is a modern e-commerce application for purchasing electronics, featuring an
   - [Frontend](#-frontend)
   - [Backend](#-backend)
 - [Project structure](#-project-structure)
-- [Installation & Setup](#-installation----setup)
+- [Installation & Setup](#-installation--setup)
 - [Authors](#-authors)
 
 ## 🚀 Features
@@ -21,7 +21,7 @@ This is a modern e-commerce application for purchasing electronics, featuring an
 - **Product Categories**: Filter and sort products with ease.
 - **Authentication**: Secure login and user account management.
 
-## 🖥️ Frontend
+## 💻 Frontend
 
 **Technologies:**
 
@@ -41,120 +41,110 @@ This is a modern e-commerce application for purchasing electronics, featuring an
 - **Express** - For creating RESTful APIs.
 - **PostgreSQL** - Relational database for storing products, categories, and orders.
 - **JWT** - For user authentication and authorization.
+- **Cloudinary** - For easy and fast image delivery.
 
-## 🗂️ Project structure
+## 📁 Project structure
+
+### Frontend
 
 ```
 .
-├── README.md
-├── backend
-│   ├── nodemon.json
-│   ├── package-lock.json
-│   ├── package.json
-│   ├── public
-│   ├── src
-│   │   ├── configs
-│   │   │   └── global.config.ts
-│   │   ├── controllers
-│   │   │   ├── carts.controller.ts
-│   │   │   ├── products.controller.ts
-│   │   │   └── users.controller.ts
-│   │   ├── db
-│   │   │   ├── connection.ts
-│   │   │   └── queries
-│   │   │       ├── carts.query.ts
-│   │   │       ├── products.query.ts
-│   │   │       └── users.query.ts
-│   │   ├── index.ts
-│   │   ├── middlewares
-│   │   │   ├── auth.middleware.ts
-│   │   │   └── errorHandler.middleware.ts
-│   │   ├── models
-│   │   ├── routes
-│   │   │   ├── carts.route.ts
-│   │   │   ├── products.route.ts
-│   │   │   └── users.route.ts
-│   │   ├── services
-│   │   │   ├── carts.service.ts
-│   │   │   ├── products.service.ts
-│   │   │   └── users.service.ts
-│   │   ├── types
-│   │   │   ├── auth.type.ts
-│   │   │   ├── product.type.ts
-│   │   │   └── user.type.ts
-│   │   └── utils
-│   │       ├── dijkstra.ts
-│   │       ├── errors.util.ts
-│   │       └── images.utils.ts
-│   └── tsconfig.json
-├── frontend
-│   ├── eslint.config.js
-│   ├── index.html
-│   ├── package-lock.json
-│   ├── package.json
-│   ├── postcss.config.js
-│   ├── public
-│   │   ├── logo.svg
-│   │   ├── main.jpg
-│   │   ├── main2.jpg
-│   │   ├── main3-medium.webp
-│   │   ├── main3-small.webp
-│   │   ├── main3.webp
-│   │   ├── main4.webp
-│   │   ├── ps5-wide.webp
-│   │   ├── ps5.webp
-│   │   └── vite.svg
-│   ├── src
-│   │   ├── App.css
-│   │   ├── App.tsx
-│   │   ├── assets
-│   │   │   └── react.svg
-│   │   ├── components
-│   │   │   ├── Footer.tsx
-│   │   │   ├── header
-│   │   │   │   ├── AccountPopover.tsx
-│   │   │   │   ├── Header.tsx
-│   │   │   │   └── ShoppingCartPopover.tsx
-│   │   │   └── icons
-│   │   │       └── DropdownIcons.tsx
-│   │   ├── config
-│   │   │   └── global.config.ts
-│   │   ├── features
-│   │   │   ├── cartSlice.ts
-│   │   │   └── userSlice.ts
-│   │   ├── hooks
-│   │   │   ├── useApi.tsx
-│   │   │   └── useFetch.tsx
-│   │   ├── index.css
-│   │   ├── main.tsx
-│   │   ├── pages
-│   │   │   ├── auth
-│   │   │   │   ├── AuthMain.tsx
-│   │   │   │   ├── InputField.tsx
-│   │   │   │   ├── LoginForm.tsx
-│   │   │   │   ├── MSection.tsx
-│   │   │   │   ├── RegisterForm.tsx
-│   │   │   │   └── page.tsx
-│   │   │   ├── cart
-│   │   │   │   └── page.tsx
-│   │   │   ├── home
-│   │   │   │   ├── CatalogItem.tsx
-│   │   │   │   ├── CatalogPagination.tsx
-│   │   │   │   ├── Dropdown.tsx
-│   │   │   │   └── page.tsx
-│   │   │   └── product
-│   │   │       └── page.tsx
-│   │   ├── store.ts
-│   │   ├── types
-│   │   │   └── index.ts
-│   │   ├── utils
-│   │   └── vite-env.d.ts
-│   ├── tailwind.config.js
-│   ├── tsconfig.app.json
-│   ├── tsconfig.json
-│   ├── tsconfig.node.json
-│   └── vite.config.ts
-└── sqlSelect.tx
+├── eslint.config.js
+├── index.html
+├── package-lock.json
+├── package.json
+├── postcss.config.js
+├── public
+│   ├── main3-medium.webp
+│   ├── main3-small.webp
+│   └── main3.webp
+├── src
+│   ├── App.css
+│   ├── App.tsx
+│   ├── components
+│   │   ├── Footer.tsx
+│   │   ├── header
+│   │   │   ├── AccountPopover.tsx
+│   │   │   ├── Header.tsx
+│   │   │   └── ShoppingCartPopover.tsx
+│   │   └── icons
+│   │       └── DropdownIcons.tsx
+│   ├── config
+│   │   └── global.config.ts
+│   ├── features
+│   │   ├── cartSlice.ts
+│   │   └── userSlice.ts
+│   ├── hooks
+│   │   ├── useApi.tsx
+│   │   └── useFetch.tsx
+│   ├── index.css
+│   ├── main.tsx
+│   ├── pages
+│   │   ├── auth
+│   │   │   ├── AuthMain.tsx
+│   │   │   ├── InputField.tsx
+│   │   │   ├── LoginForm.tsx
+│   │   │   ├── MSection.tsx
+│   │   │   ├── RegisterForm.tsx
+│   │   │   └── page.tsx
+│   │   ├── cart
+│   │   │   └── page.tsx
+│   │   ├── home
+│   │   │   ├── CatalogItem.tsx
+│   │   │   ├── CatalogPagination.tsx
+│   │   │   ├── Dropdown.tsx
+│   │   │   └── page.tsx
+│   │   └── product
+│   │       └── page.tsx
+│   ├── store.ts
+│   ├── types
+│   │   └── index.ts
+│   ├── utils
+│   └── vite-env.d.ts
+├── tailwind.config.js
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.node.json
+└── vite.config.ts
+```
+
+### Backend
+
+```
+.
+├── nodemon.json
+├── package-lock.json
+├── package.json
+├── src
+│   ├── configs
+│   │   └── global.config.ts
+│   ├── controllers
+│   │   ├── products.controller.ts
+│   │   └── users.controller.ts
+│   ├── db
+│   │   ├── connection.ts
+│   │   └── queries
+│   │       ├── products.query.ts
+│   │       └── users.query.ts
+│   ├── index.ts
+│   ├── middlewares
+│   │   ├── auth.middleware.ts
+│   │   └── errorHandler.middleware.ts
+│   ├── models
+│   ├── routes
+│   │   ├── products.route.ts
+│   │   └── users.route.ts
+│   ├── services
+│   │   ├── products.service.ts
+│   │   └── users.service.ts
+│   ├── types
+│   │   ├── auth.type.ts
+│   │   ├── product.type.ts
+│   │   └── user.type.ts
+│   └── utils
+│       ├── errors.util.ts
+│       └── images.utils.ts
+└── tsconfig.json
 ```
 
 ## ⚙️ Installation & Setup
@@ -183,6 +173,21 @@ cd backend
 npm install
 
 npm start
+```
+
+You will also need to configure .env file for backend
+
+```.evn.example
+PORT=
+JWT_SECRET=
+DB_HOST=
+DB_PORT=
+DB_USER=
+DB_PASSWORD=
+DB_NAME=
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
 ```
 
 ## 👨‍💻 Authors
