@@ -6,13 +6,11 @@ This is a modern e-commerce application for purchasing electronics, featuring an
 
 ## Table of Contents
 
-- [Features](#features)
-- - [Frontend](#frontend)
-- - [Backend](#backend)
-- [Installation](#Installation&setup)
-- [License](#license)
-
----
+- [Features](#-features)
+  - [Frontend](#-frontend)
+  - [Backend](#-backend)
+- [Installation & Setup](#-installation--setup)
+- [Authors](#-authors)
 
 ## 🚀 Features
 
@@ -20,8 +18,6 @@ This is a modern e-commerce application for purchasing electronics, featuring an
 - **Shopping Cart**: Add, remove, and update item quantities with real-time price calculation.
 - **Product Categories**: Filter and sort products with ease.
 - **Authentication**: Secure login and user account management.
-
----
 
 ## 🖥️ Frontend
 
@@ -35,8 +31,6 @@ This is a modern e-commerce application for purchasing electronics, featuring an
 - **Redux Toolkit** - For global state management (e.g., cart, user data).
 - **Vite** - For a fast development environment and optimized builds.
 
----
-
 ## 🌐 Backend
 
 **Technologies:**
@@ -45,8 +39,6 @@ This is a modern e-commerce application for purchasing electronics, featuring an
 - **Express** - For creating RESTful APIs.
 - **PostgreSQL** - Relational database for storing products, categories, and orders.
 - **JWT** - For user authentication and authorization.
-
----
 
 ## ⚙️ Installation & Setup
 
