@@ -4,6 +4,16 @@ This is a modern e-commerce application for purchasing electronics, featuring an
 
 ---
 
+## Table of Contents
+
+- [Features](#features)
+- - [Frontend](#frontend)
+- - [Backend](#backend)
+- [Installation](#Installation&setup)
+- [License](#license)
+
+---
+
 ## 🚀 Features
 
 - **Responsive Design**: Fully optimized for both desktop and mobile devices.
@@ -65,3 +75,7 @@ npm install
 
 npm start
 ```
+
+## 👨‍💻 Authors
+
+**Artem Levchenko**
