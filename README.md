@@ -11,6 +11,8 @@ This is a modern e-commerce application for purchasing electronics, featuring an
   - [Frontend](#-frontend)
   - [Backend](#-backend)
 - [Project structure](#-project-structure)
+  - [Frontend](#frontend)
+  - [Backend](#backend)
 - [Installation & Setup](#-installation--setup)
 - [Authors](#-authors)
 
@@ -49,11 +51,6 @@ This is a modern e-commerce application for purchasing electronics, featuring an
 
 ```
 .
-├── eslint.config.js
-├── index.html
-├── package-lock.json
-├── package.json
-├── postcss.config.js
 ├── public
 │   ├── main3-medium.webp
 │   ├── main3-small.webp
@@ -101,20 +98,12 @@ This is a modern e-commerce application for purchasing electronics, featuring an
 │   │   └── index.ts
 │   ├── utils
 │   └── vite-env.d.ts
-├── tailwind.config.js
-├── tsconfig.app.json
-├── tsconfig.json
-├── tsconfig.node.json
-└── vite.config.ts
 ```
 
 ### Backend
 
 ```
 .
-├── nodemon.json
-├── package-lock.json
-├── package.json
 ├── src
 │   ├── configs
 │   │   └── global.config.ts
@@ -144,10 +133,9 @@ This is a modern e-commerce application for purchasing electronics, featuring an
 │   └── utils
 │       ├── errors.util.ts
 │       └── images.utils.ts
-└── tsconfig.json
 ```
 
-## ⚙️ Installation & Setup
+## 🧰 Installation & Setup
 
 ### 1. Clone the repository
 
