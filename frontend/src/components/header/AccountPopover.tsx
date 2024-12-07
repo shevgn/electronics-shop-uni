@@ -27,7 +27,7 @@ export default function UserPopover() {
   const { x, y, strategy, refs, context, placement } = useFloating({
     open: isOpen,
     onOpenChange: setIsOpen,
-    middleware: [offset(8), flip(), shift({ padding: 38 })],
+    middleware: [offset(8), flip(), shift({ padding: 40 })],
     whileElementsMounted: autoUpdate,
   });
 

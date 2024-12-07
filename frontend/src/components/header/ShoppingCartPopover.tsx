@@ -30,7 +30,7 @@ export default function ShoppingCartPopover() {
   const { x, y, strategy, refs, context, placement } = useFloating({
     open: isOpen,
     onOpenChange: setIsOpen,
-    middleware: [offset(8), flip(), shift({ padding: 38 })],
+    middleware: [offset(8), flip(), shift({ padding: 40 })],
     whileElementsMounted: autoUpdate,
   });
 
@@ -139,22 +139,19 @@ export default function ShoppingCartPopover() {
                 className="min-h-28 w-80 rounded-lg border bg-white p-4 text-black shadow-lg"
               >
                 <h3 className="mb-2 text-lg font-bold">Your Cart</h3>
-                <ul className="mb-3 space-y-1">
+                <motion.ul className="mb-3 space-y-1">
                   <AnimatePresence>
                     {cart.length > 0 ? (
                       cart.map((item) => (
                         <motion.li
-                          initial={{ scale: 1, backgroundColor: "#ffffff" }}
                           animate={{ opacity: 1 }}
-                          whileHover={{ backgroundColor: "#f1f1f1" }}
                           exit={{
                             scale: 1.2,
                             opacity: 0,
-                            transition: { duration: 0.3 },
                           }}
-                          transition={{ duration: 0.1 }}
+                          transition={{ duration: 0.3 }}
                           key={item.id}
-                          className="flex items-center justify-between rounded p-0.5 text-sm"
+                          className="flex items-center justify-between rounded p-0.5 text-sm hover:bg-gray-100"
                         >
                           <span>{item.name}</span>
                           <div className="flex items-center space-x-2">
@@ -196,7 +193,7 @@ export default function ShoppingCartPopover() {
                       </motion.p>
                     )}
                   </AnimatePresence>
-                </ul>
+                </motion.ul>
                 <AnimatePresence>
                   {cart.length > 0 && (
                     <>
