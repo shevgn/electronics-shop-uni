@@ -94,6 +94,7 @@ export default function Home() {
                 <h4 className="visually-hidden">Products</h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-6 md:grid-cols-3 md:gap-4 lg:grid-cols-4 lg:gap-2 xl:grid-cols-5 xl:gap-4">
                   <AnimatePresence>
+                    {isLoading && <p>Loading...</p>}
                     {data &&
                       data.map(
                         (item, index) =>

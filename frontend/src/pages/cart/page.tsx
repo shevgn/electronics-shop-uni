@@ -21,19 +21,24 @@ export default function Cart() {
     dispatch(removeItem({ id }));
   };
 
-  const totalAmount = cart.reduce(
+  const subtotalAmount: number = cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0,
   );
 
-  const calculateDiscount = (amount: number) => {
+  const calculateDiscount = (amount: number): number => {
     if (promoApplied) return amount * discount;
     return 0;
   };
 
-  const calculateTax = (amount: number) => {
+  const calculateTax = (amount: number): number => {
     return amount * tax;
   };
+
+  const totalAmount: number =
+    cart.reduce((total, item) => total + item.price * item.quantity, 0) -
+    calculateDiscount(subtotalAmount) +
+    calculateTax(subtotalAmount);
 
   return (
     <>
@@ -231,21 +236,21 @@ export default function Cart() {
               <h4 className="sr-only">Total calculation</h4>
               <div className="mb-3 flex flex-row justify-between">
                 <h5 className="text-base">Subtotal</h5>
-                <span className="">${totalAmount.toFixed(2)}</span>
+                <span className="">${subtotalAmount.toFixed(2)}</span>
               </div>
               <div className="flex flex-col space-y-1 text-sm text-gray-500">
                 <div className="flex flex-row justify-between">
                   <span>Discount</span>
                   <span>
                     {promoApplied
-                      ? `(${discount * 100}%) - $${calculateDiscount(totalAmount).toFixed(2)}`
+                      ? `(${discount * 100}%) - $${calculateDiscount(subtotalAmount).toFixed(2)}`
                       : " - $0"}
                   </span>
                 </div>
                 <div className="flex flex-row justify-between">
                   <span>Tax</span>
                   <span>
-                    ({tax * 100}%) + ${calculateTax(totalAmount).toFixed(2)}
+                    ({tax * 100}%) + ${calculateTax(subtotalAmount).toFixed(2)}
                   </span>
                 </div>
               </div>
@@ -256,17 +261,16 @@ export default function Cart() {
               <div className="flex flex-row justify-between">
                 <span className="text-lg font-medium">Total</span>
                 <span className="text-lg font-medium">
-                  $
-                  {(
-                    totalAmount -
-                    calculateDiscount(totalAmount) +
-                    calculateTax(totalAmount)
-                  ).toFixed(2)}
+                  ${totalAmount.toFixed(2)}
                 </span>
               </div>
             </section>
           </motion.section>
-          <button className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">
+          <button
+            onClick={() => {}}
+            type="button"
+            className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+          >
             <span>Confirm</span>
           </button>
         </motion.section>

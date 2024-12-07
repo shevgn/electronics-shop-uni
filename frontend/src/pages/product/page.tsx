@@ -2,10 +2,11 @@ import { useLocation } from "react-router-dom";
 import Header from "../../components/header/Header";
 import Footer from "../../components/Footer";
 import { motion } from "framer-motion";
+import * as types from "@/types";
 
 export default function Product() {
   const location = useLocation();
-  const item = location.state.item;
+  const item: types.Product = location.state.item;
 
   return (
     <>
@@ -47,7 +48,7 @@ export default function Product() {
             >
               <img
                 className="h-full w-full rounded-lg object-cover text-xl text-white"
-                src={item.image}
+                src={item.images.find((image) => image.includes("wide"))}
                 alt={item.name}
               />
             </motion.div>
