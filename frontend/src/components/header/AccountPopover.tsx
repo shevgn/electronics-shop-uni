@@ -17,6 +17,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { logout } from "@/features/userSlice";
+import { clearCart } from "@/features/cartSlice";
 
 export default function UserPopover() {
   const { user, token } = useSelector((state: RootState) => state.user);
@@ -121,6 +122,7 @@ export default function UserPopover() {
                   onClick={() => {
                     setIsOpen(false);
                     dispatch(logout());
+                    dispatch(clearCart());
                   }}
                 >
                   Log Out
