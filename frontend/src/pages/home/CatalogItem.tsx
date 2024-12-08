@@ -1,14 +1,22 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Product } from "@/types/index";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "@/features/cartSlice";
+import { RootState } from "@/store";
 
 export default function CatalogItem({ item }: { item: Product }) {
+  const user = useSelector((state: RootState) => state.user.token);
   const dispatch = useDispatch();
 
   const addToCart = () => {
-    dispatch(addItem({ ...item, quantity: 1 }));
+    if (!user) {
+      alert("Please log in to add items to your cart");
+      return;
+    }
+    dispatch(
+      addItem({ id: item.id, name: item.name, price: item.price, quantity: 1 }),
+    );
   };
 
   return (
