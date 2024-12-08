@@ -1,8 +1,10 @@
-import express, { Express, Request, Response } from "express";
+import express, { Express } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import usersRouter from "@/routes/users.route";
 import productsRouter from "@/routes/products.route";
+import cartsRouter from "@/routes/carts.route";
+import ordersRouter from "@/routes/orders.route";
 import errorHandler from "@/middlewares/errorHandler.middleware";
 
 dotenv.config();
@@ -13,18 +15,15 @@ const port = process.env.PORT || 3000;
 app.use(
   cors({
     origin: "http://localhost:5173",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true,
   }),
 );
 app.use(express.json());
 
-app.get("/", (_: Request, res: Response) => {
-  res.send("Hello World!");
-});
-
 app.use("/users", usersRouter);
 app.use("/products", productsRouter);
+app.use("/orders", ordersRouter);
 
 app.use(errorHandler);
 
