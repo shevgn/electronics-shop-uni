@@ -17,10 +17,13 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { updateQuantity } from "@/features/cartSlice";
+import { ICartItem } from "@/types";
 
 export default function ShoppingCartPopover() {
   const [isOpen, setIsOpen] = useState(false);
-  const cart = useSelector((state: RootState) => state.cart.items);
+  const cart = useSelector(
+    (state: RootState) => state.cart.items,
+  ) as ICartItem[];
   const dispatch = useDispatch();
 
   const changeQuantity = (id: number, quantity: number): void => {
@@ -44,12 +47,13 @@ export default function ShoppingCartPopover() {
     role,
   ]);
 
-  const totalAmount = cart.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0,
-  );
+  const totalAmount = cart
+    ? cart.reduce((total, item) => total + item.price * item.quantity, 0)
+    : 0;
 
-  const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
+  const totalQuantity = cart
+    ? cart.reduce((total, item) => total + item.quantity, 0)
+    : 0;
 
   return (
     <>
