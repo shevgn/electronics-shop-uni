@@ -24,7 +24,7 @@ export const addOne = async (
   password: string,
 ): Promise<User> => {
   const result = await pool.query(
-    "INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *",
+    "INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, 'user') RETURNING *",
     [name, email, password],
   );
   return result.rows[0];
