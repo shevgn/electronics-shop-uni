@@ -8,6 +8,8 @@ import {
   NotFoundError,
   UnauthorizedError,
 } from "@/utils/errors.util";
+import { generateToken } from "@/utils/jwt.utils";
+import { create } from "domain";
 
 export async function getAll(): Promise<User[]> {
   try {
@@ -39,13 +41,12 @@ export async function login(user: UserLogin): Promise<LoginResponse> {
       throw new UnauthorizedError("Invalid password");
     }
 
-    const token = jwt.sign({ id: foundUser.id }, JWT_SECRET, {
-      expiresIn: "1h",
-    });
+    const token = generateToken(foundUser.id, foundUser.email, foundUser.role);
 
     return {
       user: {
         id: foundUser.id,
+        role: foundUser.role,
         name: foundUser.name,
         email: foundUser.email,
       },
@@ -72,13 +73,16 @@ export async function register(user: UserRegister): Promise<LoginResponse> {
       throw new ServerError("Adding user failed", 500);
     }
 
-    const token = jwt.sign({ id: createdUser.id }, JWT_SECRET, {
-      expiresIn: "1h",
-    });
+    const token = generateToken(
+      createdUser.id,
+      createdUser.email,
+      createdUser.role,
+    );
 
     return {
       user: {
         id: createdUser.id,
+        role: createdUser.role,
         name: createdUser.name,
         email: createdUser.email,
       },
