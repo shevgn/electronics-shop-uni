@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
 import AccountPopover from "./AccountPopover";
 import ShoppingCartPopover from "./ShoppingCartPopover";
+import { RootState } from "@/store";
+import { useSelector } from "react-redux";
 
 export default function Header() {
+  const user = useSelector((state: RootState) => state.user);
+
   return (
     <header className="fixed top-0 z-30 h-14 w-full px-4 md:px-10">
       <nav className="flex h-full w-full justify-between rounded-b-md bg-white shadow">
@@ -21,6 +25,17 @@ export default function Header() {
           <p className="group-hover:text-gray-600">Electronics</p>
         </Link>
         <ul className="flex items-center justify-center px-4">
+          {user && user.user?.role === "admin" && (
+            <li className="flex h-4/5 p-1.5">
+              <Link
+                to="/admin"
+                className="flex h-full w-full items-center rounded-md border border-black bg-black px-2 text-white hover:scale-105"
+              >
+                Admin Panel
+              </Link>
+            </li>
+          )}
+
           <li className="flex aspect-square h-full p-1.5">
             <ShoppingCartPopover />
           </li>
