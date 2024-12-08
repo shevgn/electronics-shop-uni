@@ -7,7 +7,9 @@ interface UserState {
 }
 
 const initialState: UserState = {
-  user: JSON.parse(localStorage.getItem("user") || "null"),
+  user: localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user")!)
+    : null,
   token: localStorage.getItem("token"),
 };
 
@@ -26,7 +28,7 @@ const userSlice = createSlice({
     },
     logout: (state) => {
       state.token = null;
-      state.user = { name: "", email: "" };
+      state.user = null;
       localStorage.removeItem("token");
       localStorage.removeItem("user");
     },

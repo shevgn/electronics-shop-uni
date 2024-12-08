@@ -6,8 +6,8 @@ interface CartState {
 }
 
 const initialState: CartState = JSON.parse(
-  localStorage.getItem("cart") || "[]",
-);
+  localStorage.getItem("cart") || "null",
+) || { items: new Array<ICartItem>() };
 
 const cartSlice = createSlice({
   name: "cart",
@@ -50,7 +50,6 @@ const cartSlice = createSlice({
     },
     clearCart: (state) => {
       state.items = [];
-
       localStorage.removeItem("cart");
     },
   },
