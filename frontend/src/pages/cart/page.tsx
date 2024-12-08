@@ -1,17 +1,43 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
-import { updateQuantity, removeItem } from "@/features/cartSlice";
-
-const discount: number = 0.2;
-const tax: number = 0.05;
+import { updateQuantity, removeItem, clearCart } from "@/features/cartSlice";
+import useApi from "@/hooks/useApi";
+import { CreateOrderResponse } from "@/types/orders";
 
 export default function Cart() {
   const cart = useSelector((state: RootState) => state.cart.items);
   const dispatch = useDispatch();
-  const [promoApplied, setPromoApplied] = useState(false);
+  const navigate = useNavigate();
+  const { data, isLoading, error, fetchData } = useApi<CreateOrderResponse>(
+    "http://localhost:3000/orders",
+    { method: "POST", skipFetch: true },
+  );
+  const [isConfirming, setIsConfirming] = useState(false);
+  const [isConfirmed, setIsConfirmed] = useState(false);
+
+  const handleOrderCreate = async () => {
+    try {
+      const response = await fetchData({
+        body: {
+          items: cart.map((item) => ({
+            productId: item.id,
+            quantity: item.quantity,
+          })),
+        },
+      });
+      setTimeout(() => {
+        console.log("Order created:", response);
+        setIsConfirmed(true);
+        dispatch(clearCart());
+        navigate("/");
+      }, 2000);
+    } catch (err) {
+      console.error("Failed to create order:", err);
+    }
+  };
 
   const changeQuantity = (id: number, quantity: number) => {
     dispatch(updateQuantity({ id, quantity }));
@@ -21,24 +47,10 @@ export default function Cart() {
     dispatch(removeItem({ id }));
   };
 
-  const subtotalAmount: number = cart.reduce(
+  const totalAmount: number = cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0,
   );
-
-  const calculateDiscount = (amount: number): number => {
-    if (promoApplied) return amount * discount;
-    return 0;
-  };
-
-  const calculateTax = (amount: number): number => {
-    return amount * tax;
-  };
-
-  const totalAmount: number =
-    cart.reduce((total, item) => total + item.price * item.quantity, 0) -
-    calculateDiscount(subtotalAmount) +
-    calculateTax(subtotalAmount);
 
   return (
     <>
@@ -207,56 +219,7 @@ export default function Cart() {
             className="relative flex flex-col"
           >
             <h3 className="sr-only">Payment Details</h3>
-            <section className="relative mb-4 flex w-full flex-col">
-              <h4 className="sr-only">Your promocode</h4>
-              <div className="relative flex flex-col">
-                <label htmlFor="promo" className="sr-only">
-                  Your promocode
-                </label>
-                <input
-                  id="promo"
-                  type="text"
-                  placeholder="Promocode"
-                  className={`rounded-lg border border-gray-300 bg-transparent p-1.5 focus:border-gray-500 focus:outline-none ${promoApplied && "border-2 border-green-500"}`}
-                />
-                <motion.button
-                  initial={false}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setPromoApplied(true)}
-                  className="absolute bottom-0 right-0 top-0 rounded-lg border border-gray-300 bg-white p-1 px-2"
-                >
-                  <span className="font-medium">Apply</span>
-                </motion.button>
-              </div>
-              <p className="pt-2 text-sm text-gray-400">20% off discount</p>
-            </section>
-            <hr className="border-dashed border-gray-300" />
-            <section className="my-4 flex flex-col">
-              <h4 className="sr-only">Total calculation</h4>
-              <div className="mb-3 flex flex-row justify-between">
-                <h5 className="text-base">Subtotal</h5>
-                <span className="">${subtotalAmount.toFixed(2)}</span>
-              </div>
-              <div className="flex flex-col space-y-1 text-sm text-gray-500">
-                <div className="flex flex-row justify-between">
-                  <span>Discount</span>
-                  <span>
-                    {promoApplied
-                      ? `(${discount * 100}%) - $${calculateDiscount(subtotalAmount).toFixed(2)}`
-                      : " - $0"}
-                  </span>
-                </div>
-                <div className="flex flex-row justify-between">
-                  <span>Tax</span>
-                  <span>
-                    ({tax * 100}%) + ${calculateTax(subtotalAmount).toFixed(2)}
-                  </span>
-                </div>
-              </div>
-            </section>
-            <hr className="border-dashed border-gray-300" />
-            <section className="mt-4">
+            <section className="">
               <h4 className="sr-only">Total amount</h4>
               <div className="flex flex-row justify-between">
                 <span className="text-lg font-medium">Total</span>
@@ -267,13 +230,54 @@ export default function Cart() {
             </section>
           </motion.section>
           <button
-            onClick={() => {}}
+            disabled={isLoading}
+            onClick={() => setIsConfirming(true)}
             type="button"
             className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
           >
-            <span>Confirm</span>
+            <span>{isLoading ? "Creating order..." : "Continue"}</span>
           </button>
         </motion.section>
+
+        <AnimatePresence>
+          {isConfirming && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+              <div className="flex flex-col space-y-4 rounded-lg bg-white p-4 shadow-lg">
+                {!isConfirmed ? (
+                  <>
+                    <h2 className="text-lg font-medium text-black">
+                      Confirm Order
+                    </h2>
+                    <p className="text-gray-500">
+                      Are you sure you want to place this order?
+                    </p>
+                    <div className="flex flex-row justify-end space-x-4">
+                      <button
+                        onClick={() => setIsConfirming(false)}
+                        className="rounded-lg border border-gray-300 px-4 py-2 text-gray-500"
+                      >
+                        <span>Cancel</span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          handleOrderCreate();
+                          setIsConfirmed(true);
+                        }}
+                        className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+                      >
+                        <span>Confirm</span>
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <h2 className="text-lg font-medium text-black">
+                    Order Created
+                  </h2>
+                )}
+              </div>
+            </div>
+          )}
+        </AnimatePresence>
       </main>
     </>
   );
