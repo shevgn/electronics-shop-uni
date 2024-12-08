@@ -42,7 +42,11 @@ export default function LoginForm({
         dispatch(
           login({
             token: response.token,
-            user: { name: response.user.name, email: response.user.email },
+            user: {
+              name: response.user.name,
+              email: response.user.email,
+              role: response.user.role,
+            },
           }),
         );
         navigate("/");

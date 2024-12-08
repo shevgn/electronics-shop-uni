@@ -20,6 +20,7 @@ export interface ICartItem {
 
 export interface IUser {
   id: number;
+  role: string;
   name: string;
   email: string;
   password: string;
@@ -28,11 +29,13 @@ export interface IUser {
 export interface IUserSafe {
   name: string;
   email: string;
+  role: string;
 }
 
 export type LoginResponse = {
   user: {
     id: number;
+    role: string;
     name: string;
     email: string;
   };
