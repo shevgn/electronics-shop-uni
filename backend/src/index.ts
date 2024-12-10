@@ -3,7 +3,6 @@ import cors from "cors";
 import dotenv from "dotenv";
 import usersRouter from "@/routes/users.route";
 import productsRouter from "@/routes/products.route";
-import cartsRouter from "@/routes/carts.route";
 import ordersRouter from "@/routes/orders.route";
 import errorHandler from "@/middlewares/errorHandler.middleware";
 
