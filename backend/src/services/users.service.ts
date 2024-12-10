@@ -1,15 +1,12 @@
-import { JWT_SECRET } from "@/configs/global.config";
 import { LoginResponse } from "@/types/auth.type";
 import { User, UserLogin, UserRegister } from "@/types/user.type";
 import query from "@db/queries/users.query";
-import jwt from "jsonwebtoken";
 import {
   ServerError,
   NotFoundError,
   UnauthorizedError,
 } from "@/utils/errors.util";
 import { generateToken } from "@/utils/jwt.utils";
-import { create } from "domain";
 
 export async function getAll(): Promise<User[]> {
   try {
@@ -93,4 +90,12 @@ export async function register(user: UserRegister): Promise<LoginResponse> {
   }
 }
 
-export default { getAll, get, login, register };
+const deleteUser = async (id: number): Promise<void> => {
+  try {
+    await query.deleteOne(id);
+  } catch (error) {
+    throw new ServerError("Delete user failed", 500, error);
+  }
+};
+
+export default { getAll, get, login, register, deleteUser };
