@@ -52,3 +52,9 @@ export type Product = {
   images: string[];
   brand: string;
 };
+
+export type customRender<T> = Partial<
+  Record<keyof T, (value: any, row: T) => React.ReactNode>
+> & {
+  actions?: (row: T) => React.ReactNode;
+};
