@@ -22,4 +22,13 @@ const get = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export default { getAll, get };
+const create = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    await productsService.create(req.body);
+    res.status(201).json({ message: "Product created successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export default { getAll, get, create };

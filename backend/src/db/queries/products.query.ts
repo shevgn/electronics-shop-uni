@@ -62,4 +62,56 @@ const get = async (id: number): Promise<Product> => {
   return result.rows[0];
 };
 
-export default { getAll, get };
+const addOne = async (
+  client: any,
+  product: Omit<Product, "images">,
+): Promise<void> => {
+  const { name, price, release_year, brand, categories, details } = product;
+
+  const brandQuery = `
+    INSERT INTO brands (name)
+    VALUES ($1)
+    ON CONFLICT (name) DO UPDATE SET name = EXCLUDED.name 
+    RETURNING id;
+  `;
+  const brandResult = await client.query(brandQuery, [brand]);
+  const brandId = brandResult.rows[0].id;
+
+  const productQuery = `
+      INSERT INTO products (name, price, release_year, brand_id)
+      VALUES ($1, $2, $3, $4)
+      RETURNING id;
+    `;
+  const productResult = await client.query(productQuery, [
+    name,
+    price,
+    release_year,
+    brandId,
+  ]);
+  const productId = productResult.rows[0].id;
+
+  if (categories.length > 0) {
+    const categoryQuery = `
+        INSERT INTO product_categories (product_id, category_id)
+        SELECT $1, id
+        FROM categories
+        WHERE name = ANY($2::text[]);
+      `;
+    await client.query(categoryQuery, [productId, categories]);
+  }
+
+  if (Object.keys(details).length > 0) {
+    const detailEntries = Object.entries(details);
+    const detailQuery = `
+        INSERT INTO product_details (product_id, key, value)
+        VALUES 
+        ${detailEntries
+          .map((_, i) => `($1, $${i * 2 + 2}, $${i * 2 + 3})`)
+          .join(", ")};
+      `;
+    const detailParams = detailEntries.flatMap(([key, value]) => [key, value]);
+    await client.query(detailQuery, [productId, ...detailParams]);
+  }
+};
+
+export default { getAll, get, addOne };

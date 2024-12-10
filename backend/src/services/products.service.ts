@@ -2,6 +2,7 @@ import { Product } from "@/types/product.type";
 import { ServerError } from "@/utils/errors.util";
 import query from "@db/queries/products.query";
 import { generateImageUrl } from "@utils/images.utils";
+import pool from "@db/connection";
 
 const getAll = async (category?: string): Promise<Product[]> => {
   try {
@@ -38,4 +39,19 @@ const get = async (id: number): Promise<Product> => {
   }
 };
 
-export default { getAll, get };
+const create = async (product: Omit<Product, "images">): Promise<void> => {
+  const client = await pool.connect();
+  try {
+    await client.query("BEGIN");
+    await query.addOne(client, product);
+
+    await client.query("COMMIT");
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw new ServerError("Failed to create product", 500, error);
+  } finally {
+    client.release();
+  }
+};
+
+export default { getAll, get, create };
