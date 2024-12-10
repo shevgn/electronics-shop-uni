@@ -40,4 +40,13 @@ async function register(
   }
 }
 
-export default { getAll, get, login, register };
+const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId = await usersService.deleteUser(Number(req.body.id));
+    res.status(200).json({ id: userId, message: "User deleted" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export default { getAll, get, login, register, deleteUser };

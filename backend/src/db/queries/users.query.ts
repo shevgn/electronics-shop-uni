@@ -30,4 +30,12 @@ export const addOne = async (
   return result.rows[0];
 };
 
-export default { getAll, get, findOne, addOne };
+const deleteOne = async (id: number): Promise<number> => {
+  const result = await pool.query(
+    "DELETE FROM users WHERE id = $1 RETURNING id",
+    [id],
+  );
+  return result.rows[0].id;
+};
+
+export default { getAll, get, findOne, addOne, deleteOne };
