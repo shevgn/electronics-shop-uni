@@ -1,7 +1,7 @@
 import { Product } from "@/types";
 import Dashboard from "./Dashboard";
 import useApi from "@/hooks/useApi";
-import { div } from "motion/react-client";
+import { useMemo, useState } from "react";
 
 export default function Products() {
   const {
@@ -28,6 +28,7 @@ export default function Products() {
         body: { id: productId },
       });
       await fetchProducts();
+      alert("Product deleted successfully");
     } catch (error) {
       console.error(error);
     }
@@ -37,12 +38,43 @@ export default function Products() {
     formData: Record<string, string | number>,
   ) => {
     try {
-      await createProduct({ body: formData });
+      const details: Record<string, string> = {};
+      Object.entries(formData).forEach(([key, value]) => {
+        if (key.startsWith("detail_")) {
+          const detailKey = key.replace("detail_", "");
+          details[detailKey] = value as string;
+        }
+      });
+
+      const categories = Array.isArray(formData.categories)
+        ? (formData.categories as string[])
+        : (formData.categories as string).split(",");
+
+      const productData = {
+        name: formData.name,
+        price: Number(formData.price),
+        release_year: Number(formData.releaseYear),
+        brand: formData.brand,
+        categories: categories.map((c) => c.trim()),
+        details,
+      };
+
+      await createProduct({ body: productData });
       await fetchProducts();
+      alert("Product added successfully");
     } catch (error) {
-      console.error("Error adding user:", error);
+      console.error("Error adding product:", error);
     }
   };
+
+  const uniqueCategories = useMemo(() => {
+    if (!products) return [];
+    const categorySet = new Set<string>();
+    products.forEach((product) => {
+      product.categories.forEach((category) => categorySet.add(category));
+    });
+    return Array.from(categorySet);
+  }, [products]);
 
   return (
     <Dashboard<Product>
@@ -61,6 +93,15 @@ export default function Products() {
           required: true,
         },
         { name: "brand", label: "Brand", type: "text", required: true },
+        {
+          name: "categories",
+          label: "Categories",
+          type: "select-multiple",
+          options: uniqueCategories,
+          required: true,
+        },
+        { name: "detail_Color", label: "Color", type: "text" },
+        { name: "detail_Storage", label: "Storage", type: "text" },
       ]}
       customRender={{
         images: (value: string[]) => (
@@ -87,7 +128,6 @@ export default function Products() {
         actions: (row: Product) => (
           <button
             onClick={() => {
-              fetchProducts();
               handleProductDelete(row.id);
             }}
             key={`delete-${row.id}`}
