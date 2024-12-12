@@ -31,4 +31,13 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export default { getAll, get, create };
+const remove = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    await productsService.remove(Number(req.body.id));
+    res.status(200).json({ message: "Product removed successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export default { getAll, get, create, remove };

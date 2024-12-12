@@ -114,4 +114,12 @@ const addOne = async (
   }
 };
 
-export default { getAll, get, addOne };
+const deleteOne = async (id: number): Promise<void> => {
+  const query = `
+    DELETE FROM products
+    WHERE id = $1;
+  `;
+  await pool.query(query, [id]);
+};
+
+export default { getAll, get, addOne, deleteOne };

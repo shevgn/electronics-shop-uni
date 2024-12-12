@@ -7,6 +7,6 @@ const router = Router();
 router.get("/", productsController.getAll);
 router.get("/:id", productsController.get);
 router.post("/", auth, checkRole(["admin"]), productsController.create);
-//router.delete("/:id", auth, checkRole(["admin"]), productsController.remove);
+router.delete("/", auth, checkRole(["admin"]), productsController.remove);
 
 export default router;

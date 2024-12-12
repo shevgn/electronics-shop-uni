@@ -54,4 +54,15 @@ const create = async (product: Omit<Product, "images">): Promise<void> => {
   }
 };
 
-export default { getAll, get, create };
+const remove = async (id: number): Promise<void> => {
+  try {
+    const product = await query.get(id);
+    if (!product) {
+      throw new ServerError("Product not found", 404);
+    }
+    await query.deleteOne(id);
+  } catch (error) {
+    throw new ServerError("Failed to remove product", 500, error);
+  }
+};
+export default { getAll, get, create, remove };
