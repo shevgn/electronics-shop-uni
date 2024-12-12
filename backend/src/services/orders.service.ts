@@ -7,6 +7,15 @@ interface OrderItem {
   quantity: number;
 }
 
+const getAll = async () => {
+  try {
+    const orders = await query.findMany();
+    return orders;
+  } catch (error) {
+    throw new ServerError("Failed to get orders: " + (error as Error).message);
+  }
+};
+
 const create = async (userId: number, items: OrderItem[]) => {
   const client = await pool.connect();
 
@@ -53,4 +62,4 @@ const deleteOrder = async (orderId: number): Promise<void> => {
   }
 };
 
-export default { create, deleteOrder };
+export default { getAll, create, deleteOrder };
