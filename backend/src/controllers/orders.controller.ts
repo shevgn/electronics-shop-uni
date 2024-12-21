@@ -30,7 +30,7 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
 const deleteOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
     await ordersService.deleteOrder(req.body.id);
-    res.status(204).json({ message: "Order deleted successfully" });
+    res.status(200).json({ message: "Order deleted successfully" });
   } catch (error) {
     next(error);
   }
