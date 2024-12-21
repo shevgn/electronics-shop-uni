@@ -56,7 +56,7 @@ export default function Product() {
               <div className="relative w-full rounded-lg border border-gray-200 md:w-2/3">
                 <img
                   className="h-full w-full"
-                  src="../../public/ps5.webp"
+                  src={item.images.find((image) => image.includes("preview"))}
                   alt=""
                 />
                 <button
@@ -103,7 +103,23 @@ export default function Product() {
                 <li className="border-b border-gray-200 p-2 text-lg font-semibold">
                   Характеристики
                 </li>
-                <li className="border-b border-gray-200 p-1">{item.price}</li>
+                <li className="border-b border-gray-200 p-1">
+                  Brand: {item.brand}
+                </li>
+                <li className="border-b border-gray-200 p-1">
+                  Name: {item.name}
+                </li>
+                {Object.entries(item.details).map(([key, value], index) => (
+                  <li key={index} className="border-b border-gray-200 p-1">
+                    {key}: {value}
+                  </li>
+                ))}
+                <li className="border-b border-gray-200 p-1">
+                  Release year: {item.release_year}
+                </li>
+                <li className="border-b border-gray-200 p-1">
+                  Price: ${item.price.toFixed(2)}
+                </li>
               </ul>
             </div>
           </section>
