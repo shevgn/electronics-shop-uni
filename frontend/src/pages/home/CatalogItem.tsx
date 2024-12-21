@@ -64,7 +64,9 @@ export default function CatalogItem({ item }: { item: Product }) {
         rel="noopener noreferrer"
         className="h-full"
       >
-        <p className="text-base font-bold">{item.name}</p>
+        <p className="text-base font-bold">
+          {item.brand} {item.name}
+        </p>
       </Link>
       <p className="text-base font-medium">${item.price.toFixed(2)}</p>
       <div className="mt-2 flex h-fit items-center justify-center space-x-2">
