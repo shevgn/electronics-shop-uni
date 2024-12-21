@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 import usersRouter from "@/routes/users.route";
 import productsRouter from "@/routes/products.route";
 import ordersRouter from "@/routes/orders.route";
+import brandsRouter from "@/routes/brands.route";
+import categoriesRouter from "@/routes/categories.route";
 import errorHandler from "@/middlewares/errorHandler.middleware";
 
 dotenv.config();
@@ -23,6 +25,8 @@ app.use(express.json());
 app.use("/users", usersRouter);
 app.use("/products", productsRouter);
 app.use("/orders", ordersRouter);
+app.use("/brands", brandsRouter);
+app.use("/categories", categoriesRouter);
 
 app.use(errorHandler);
 
