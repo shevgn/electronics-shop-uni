@@ -6,8 +6,18 @@ import { Link } from "react-router-dom";
 import Users from "./Users";
 import Orders from "./Orders";
 import Products from "./Products";
+import Brands from "./Brands";
+import Categories from "./Categories";
+import { Statistics } from "./Statistics";
 
-const pages: string[] = ["Users", "Orders", "Products", "Brands", "Categories"];
+const pages: string[] = [
+  "Users",
+  "Orders",
+  "Products",
+  "Brands",
+  "Categories",
+  "Statistics",
+];
 
 export default function Admin() {
   const user = useSelector((state: RootState) => state.user);
@@ -30,9 +40,11 @@ export default function Admin() {
       case "Products":
         return <Products />;
       case "Brands":
-        return <div>Список брендів</div>;
+        return <Brands />;
       case "Categories":
-        return <div>Список категорій</div>;
+        return <Categories />;
+      case "Statistics":
+        return <Statistics />;
       default:
         return <div>Виберіть пункт меню</div>;
     }
