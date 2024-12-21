@@ -8,3 +8,10 @@ export type Product = {
   images: string[];
   brand: string;
 };
+
+export type ProductStats = {
+  brand: string;
+  name: string;
+  sold: number;
+  revenue: number;
+};

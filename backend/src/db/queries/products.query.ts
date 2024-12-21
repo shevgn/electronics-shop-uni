@@ -1,4 +1,4 @@
-import { Product } from "@/types/product.type";
+import { Product, ProductStats } from "@/types/product.type";
 import pool from "@db/connection";
 
 const getAll = async (category?: string): Promise<Product[]> => {
@@ -29,6 +29,29 @@ const getAll = async (category?: string): Promise<Product[]> => {
 
   const params = category ? [category] : [];
   const result = await pool.query(query, params);
+  return result.rows;
+};
+
+const getStats = async (): Promise<ProductStats[]> => {
+  const query = `
+      SELECT 
+          p.id AS product_id,
+          p.name AS product_name,
+          b.name AS brand_name,
+          SUM(oi.quantity) AS total_sold,
+          SUM(oi.quantity * p.price) AS total_revenue
+      FROM 
+          products p
+      JOIN 
+          brands b ON p.brand_id = b.id
+      JOIN 
+          order_items oi ON oi.product_id = p.id
+      GROUP BY 
+          p.id, p.name, b.name
+      ORDER BY 
+          total_sold DESC;
+    `;
+  const result = await pool.query(query);
   return result.rows;
 };
 
@@ -106,8 +129,8 @@ const addOne = async (
         INSERT INTO product_details (product_id, key, value)
         VALUES 
         ${detailEntries
-          .map((_, i) => `($1, $${i * 2 + 2}, $${i * 2 + 3})`)
-          .join(", ")};
+        .map((_, i) => `($1, $${i * 2 + 2}, $${i * 2 + 3})`)
+        .join(", ")};
       `;
     const detailParams = detailEntries.flatMap(([key, value]) => [key, value]);
     await client.query(detailQuery, [productId, ...detailParams]);
@@ -122,4 +145,4 @@ const deleteOne = async (id: number): Promise<void> => {
   await pool.query(query, [id]);
 };
 
-export default { getAll, get, addOne, deleteOne };
+export default { getAll, getStats, get, addOne, deleteOne };

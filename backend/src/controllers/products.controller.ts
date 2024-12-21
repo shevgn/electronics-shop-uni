@@ -1,5 +1,5 @@
 import productsService from "@/services/products.service";
-import { Product } from "@/types/product.type";
+import { Product, ProductStats } from "@/types/product.type";
 import { NextFunction, Request, Response } from "express";
 
 const getAll = async (req: Request, res: Response, next: NextFunction) => {
@@ -8,6 +8,15 @@ const getAll = async (req: Request, res: Response, next: NextFunction) => {
       req.query.category as string | undefined,
     );
     res.status(200).json(products);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getStats = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const stats: ProductStats[] = await productsService.getStats();
+    res.status(200).json(stats);
   } catch (error) {
     next(error);
   }
@@ -40,4 +49,4 @@ const remove = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export default { getAll, get, create, remove };
+export default { getAll, getStats, get, create, remove };

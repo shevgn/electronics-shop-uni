@@ -1,4 +1,4 @@
-import { Product } from "@/types/product.type";
+import { Product, ProductStats } from "@/types/product.type";
 import { ServerError } from "@/utils/errors.util";
 import query from "@db/queries/products.query";
 import { generateImageUrl } from "@utils/images.utils";
@@ -17,6 +17,19 @@ const getAll = async (category?: string): Promise<Product[]> => {
         ? [""]
         : product.images.map((image) => generateImageUrl(product.name, image)),
     }));
+  } catch (error) {
+    throw new ServerError("Failed to get products", 500, error);
+  }
+};
+
+const getStats = async (): Promise<ProductStats[]> => {
+  try {
+    const stats: ProductStats[] = await query.getStats();
+    if (!stats) {
+      throw new ServerError("Product stats not found", 404);
+    }
+
+    return stats;
   } catch (error) {
     throw new ServerError("Failed to get products", 500, error);
   }
@@ -65,4 +78,4 @@ const remove = async (id: number): Promise<void> => {
     throw new ServerError("Failed to remove product", 500, error);
   }
 };
-export default { getAll, get, create, remove };
+export default { getAll, getStats, get, create, remove };
