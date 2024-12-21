@@ -34,25 +34,13 @@ export default function Orders() {
     }
   };
 
-  const handleAddOrder = async (formData: Record<string, string | number>) => {
-    try {
-      await addOrder({
-        method: "POST",
-        body: { id: formData.userId },
-      });
-      await fetchOrders();
-    } catch (error) {
-      console.error("Failed to add order: " + error);
-    }
-  };
-
   return (
     <Dashboard<Order>
       name="Orders"
       data={orders || []}
       isFetching={isFetchingOrders}
       onFetch={fetchOrders}
-      onSubmit={handleAddOrder}
+      onSubmit={() => { }}
       customRender={{
         items: (items: OrderItem[]) => (
           <div>
