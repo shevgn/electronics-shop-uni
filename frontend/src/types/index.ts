@@ -58,3 +58,20 @@ export type customRender<T> = Partial<
 > & {
   actions?: (row: T) => React.ReactNode;
 };
+
+export type Brand = {
+  id: number;
+  name: string;
+};
+
+export type Category = {
+  id: number;
+  name: string;
+};
+
+export type ProductStats = {
+  brand: string;
+  name: string;
+  sold: number;
+  revenue: number;
+};
