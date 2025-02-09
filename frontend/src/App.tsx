@@ -16,7 +16,9 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/products/:id" element={<Product />} />
-        <Route path="/cart" element={<Cart />} />
+        <Route element={<ProtectedRoute allowedRoles={["user", "admin"]} />}>
+          <Route path="/cart" element={<Cart />} />
+        </Route>
         <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
           <Route path="/admin" element={<Admin />} />
         </Route>
